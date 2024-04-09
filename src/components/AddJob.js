@@ -6,13 +6,14 @@ class AddJob extends Component {
         super(props);
         this.state = {
             name: "",
-            status: true,
+            status: "",
 		}
     }
 
     onSubmit = (event) => {
         event.preventDefault();
-        this.props.addJob(this.state.name,this.state.status)
+        this.props.addJob(this.state.name,this.state.status);
+        this.onHandleClear();
     }
 
     onHandleChange = (event) => {
@@ -24,21 +25,33 @@ class AddJob extends Component {
         })
     }
 
+    onHandleClear = () => {
+        this.setState({
+            name: "",
+            status: true
+        })
+    }
+
+    onCloseForm = () => {
+        this.props.onCloseForm(false);
+    }
+ 
     render() {
         return (
             <div>
                 <form onSubmit={ this.onSubmit }>
-                    <h3 className="text-center  text-left">Thêm công việc</h3>
+                    <p onClick={this.onCloseForm}  className="btn-close float-end" aria-label="Close"></p>
+                    <h3 className="text-center  text-left"></h3>
                     <div className="add-job">
-                        Tên:
-                        <input type="text" name="name" placeholder="Tên công việc" className="form-control mt-2" onChange={ this.onHandleChange }/>
-                        Công việc:
-                        <select name="status"  className="form-control mt-2" onChange={ this.onHandleChange }>
+                       Name:
+                        <input type="text" name="name" placeholder="Tên " value={ this.state.name } className="form-control mt-2" onChange={ this.onHandleChange }/>
+                        Job:
+                        <select name="status"  className="form-control mt-2" value={ this.state.status } onChange={ this.onHandleChange }>
                             <option value={true}>Kích hoạt</option>
                             <option value={false}>Ẩn</option>
                         </select>
-                        <button type="submit" className="btn btn-primary mt-2 ">Lưu lại</button>
-                        <button className="btn btn-danger mt-2 ms-2">Huỷ bỏ</button>
+                        <button type="submit" className="btn btn-primary mt-2 " >Lưu lại</button>
+                        <a className="btn btn-danger mt-2 ms-2"  onClick={ this.onHandleClear }>Huỷ bỏ</a>
                     </div>
                 </form>
             </div>

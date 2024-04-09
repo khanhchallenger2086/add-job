@@ -12,7 +12,9 @@ class TableList extends Component {
         var elementsItem = data.map((item, index) => {
             return <TableItem key={index}
                 item={item}
-                index={index} />
+                index={index} 
+                onDelete = { this.props.onDelete }
+                />
         })
         return (
             <div>

@@ -8,7 +8,8 @@ class App extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			data: []
+			data: [],
+			toggleForm: true
 		}
 	}
 
@@ -44,9 +45,11 @@ class App extends Component {
 
 	}
 
-	// onHandleChange = () => {
-	// 	console.log(this.state.data);
-	// }
+	onToggleForm = () => {
+		this.setState({
+			toggleForm : !this.state.toggleForm
+		})
+	}
 
 
 	s4 = () => {
@@ -72,23 +75,46 @@ class App extends Component {
 		localStorage.setItem( "data",  JSON.stringify(data))
 	}
 
+	onCloseForm = (value) => {
+		this.setState({
+			toggleForm : value
+		})
+	}
+
+	onDelete  =  (index) => {
+		var data = this.state.data;
+		data.splice(index , 1);
+
+		this.setState({
+			data: data
+		})
+		
+		localStorage.setItem( "data",  JSON.stringify(data))
+	}
+
 
 	render() {
-		var { data } = this.state;
+		var { data,toggleForm } = this.state;
 		return (
 			<div>
 				<div className="container">
 					<div className="row">
-						<h1 className="mb-5 mt-5 text-center">Quản lý công việc</h1>
+						<h1 className="mb-5 mt-5 text-center">Quản lý</h1>
 						<hr />
-						<div className="col-4">
-							<AddJob addJob = { this.addJob } />
+						<div className={ toggleForm === true ? "col-4" : "" }>
+							 {  toggleForm === true ? (
+							 	
+								<AddJob 
+									addJob = { this.addJob } 
+									onCloseForm = {this.onCloseForm}
+							  
+							  /> ) : '' }
 						</div>
 
-						<div className="col-8">
+						<div className={ toggleForm === true ? "col-8" : "col-12" }>
 
 
-							<h3 type="button" className="btn btn-primary mt-2" onClick={ this.onHandleChange }> + Thêm công việc</h3>
+							<h3 type="button" className="btn btn-primary mt-2" onClick={ this.onToggleForm }> + </h3>
 							<h3 type="button" className="btn  ms-2 mt-2 bg-danger" onClick={ this.generateData }> + Generate Data </h3>
 
 							<div className="row">
@@ -101,7 +127,7 @@ class App extends Component {
 								</div>
 
 								<div className="col-12">
-									<TableList data = { data }/>
+									<TableList data = { data } onDelete={ this.onDelete }/>
 								</div>
 
 							</div>

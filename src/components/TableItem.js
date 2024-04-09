@@ -6,8 +6,12 @@ class TableList extends Component {
         super(props);
     }
 
+    onDelete = (index) => { 
+        this.props.onDelete(index);
+    }
+
     render() {
-        var { item ,index} =  this.props 
+        var { item ,index } =  this.props 
         return (
                 <tr>
                     <th scope="row">{ index }</th>
@@ -15,7 +19,7 @@ class TableList extends Component {
                     <td><p className={ item.status ? "badge bg-success text-center" : "badge bg-danger text-center" }>  { item.status ? "kích hoạt" : "ẩn" } </p></td>
                     <td>
                         <p className="btn btn-success">Sửa</p>
-                        <p className="btn btn-danger ms-2">Xoá</p>
+                        <p className="btn btn-danger ms-2" onClick={ () => this.onDelete(index) }>Xoá</p>
                     </td>
                 </tr>
         );
