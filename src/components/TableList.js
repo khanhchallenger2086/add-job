@@ -7,6 +7,17 @@ class TableList extends Component {
         super(props);
     }
 
+
+    onFilter = (event) => {
+        this.props.onFilter(event.target.value)
+    }
+
+    onFilterInput = (event) => {
+        this.props.onFilterInput(event.target.value)
+    }
+
+
+
     render() {
         var { data } = this.props
         var elementsItem = data.map((item, index) => {
@@ -30,9 +41,9 @@ class TableList extends Component {
                     <tbody>
                         <tr>
                             <th scope="row"></th>
-                            <td><input type="text" name="" id="" className="form-control" /></td>
+                            <td><input type="text" name="" id="" className="form-control" onChange={ this.onFilterInput }/></td>
                             <td>
-                                <select name="onSelected"  className="form-control">
+                                <select name="filter"  className="form-control" onChange={ this.onFilter }>
                                     <option value="1">Kích hoạt</option>
                                     <option value="2">Ẩn</option>
                                 </select>

@@ -9,7 +9,9 @@ class App extends Component {
 		super(props);
 		this.state = {
 			data: [],
-			toggleForm: true
+			toggleForm: true,
+			filter: '',
+			filterOfName: '',
 		}
 	}
 
@@ -92,9 +94,43 @@ class App extends Component {
 		localStorage.setItem( "data",  JSON.stringify(data))
 	}
 
+	onFilter = (valueFilterStatus) => {
+		if (valueFilterStatus  === "1") {
+			this.setState({
+				filter : true
+			})
+		} else {
+			this.setState({
+				filter : false
+			})
+		}
+
+	}
+
+	onFilterInput = (valueFilterInput) => {
+		if (valueFilterInput  !== '') {
+			this.setState({
+				filterOfName : valueFilterInput
+			})
+		}
+		console.log(valueFilterInput)
+	}
+
 
 	render() {
-		var { data,toggleForm } = this.state;
+		var { data , toggleForm, filter , filterOfName } = this.state;
+
+		if ( filter === true ) {
+			data = data.filter(dataItem =>  dataItem.status === true)
+		} else if (filter === false) {
+			data = data.filter(dataItem =>  dataItem.status === false)
+		}
+
+		// if (filterOfName !== '') {
+		// 	data = data.filter(dataItem =>  dataItem.name.indexOf("2") !== -1)
+		// } else {
+		// }
+
 		return (
 			<div>
 				<div className="container">
@@ -127,7 +163,11 @@ class App extends Component {
 								</div>
 
 								<div className="col-12">
-									<TableList data = { data } onDelete={ this.onDelete }/>
+									<TableList data = { data } 
+									onDelete={ this.onDelete } 
+									onFilter={ this.onFilter }
+									onFilterInput= { this.onFilterInput }
+									 />
 								</div>
 
 							</div>
