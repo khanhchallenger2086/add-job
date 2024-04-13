@@ -6,7 +6,7 @@ class AddJob extends Component {
         super(props);
         this.state = {
             name: "",
-            status: "",
+            status: true,
 		}
     }
 

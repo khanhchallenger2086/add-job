@@ -10,8 +10,10 @@ class App extends Component {
 		this.state = {
 			data: [],
 			toggleForm: true,
-			filter: '',
-			filterOfName: '',
+			// filter: '',
+			// filterOfName: '',
+			filterName : '',
+			filterStatus : '1',
 		}
 	}
 
@@ -94,42 +96,29 @@ class App extends Component {
 		localStorage.setItem( "data",  JSON.stringify(data))
 	}
 
-	onFilter = (valueFilterStatus) => {
-		if (valueFilterStatus  === "1") {
-			this.setState({
-				filter : true
-			})
-		} else {
-			this.setState({
-				filter : false
-			})
-		}
 
-	}
-
-	onFilterInput = (valueFilterInput) => {
-		if (valueFilterInput  !== '') {
-			this.setState({
-				filterOfName : valueFilterInput
-			})
-		}
-		console.log(valueFilterInput)
+	onFilter = (filterStatus, filterName) => {
+		this.setState({
+			filterName: filterName,
+			filterStatus: filterStatus === "1" ? true : filterStatus === "all" ?  'all' : false 
+		})
 	}
 
 
 	render() {
-		var { data , toggleForm, filter , filterOfName } = this.state;
+		var { data , toggleForm, filterName , filterStatus } = this.state;
 
-		if ( filter === true ) {
+		if ( filterStatus === true ) {
 			data = data.filter(dataItem =>  dataItem.status === true)
-		} else if (filter === false) {
+		} else if (filterStatus === false) {
 			data = data.filter(dataItem =>  dataItem.status === false)
+		} else if (filterStatus === 'all') {
+			data = data
 		}
 
-		// if (filterOfName !== '') {
-		// 	data = data.filter(dataItem =>  dataItem.name.indexOf("2") !== -1)
-		// } else {
-		// }
+		if (filterName !== '') {
+			data = data.filter((dataItem) =>  { return dataItem.name.indexOf(filterName) !== -1 }) 
+		} 
 
 		return (
 			<div>
@@ -165,8 +154,7 @@ class App extends Component {
 								<div className="col-12">
 									<TableList data = { data } 
 									onDelete={ this.onDelete } 
-									onFilter={ this.onFilter }
-									onFilterInput= { this.onFilterInput }
+									onFilter = { this.onFilter }
 									 />
 								</div>
 

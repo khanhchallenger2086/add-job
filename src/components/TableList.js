@@ -5,18 +5,28 @@ import TableItem from "./TableItem";
 class TableList extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            filterStatus: '1',
+            filterName: ''
+        }
     }
 
+    onHandleChange = (event) => {
+        var target = event.target;
+        var name = target.name;
+        var value = target.value;
 
-    onFilter = (event) => {
-        this.props.onFilter(event.target.value)
+        this.props.onFilter(
+            name === 'filterStatus'  ? value : this.state.filterStatus,
+            name === 'filterName'  ? value : this.state.filterName,
+        )
+
+        this.setState({
+            [name] : value
+        })
+
+
     }
-
-    onFilterInput = (event) => {
-        this.props.onFilterInput(event.target.value)
-    }
-
-
 
     render() {
         var { data } = this.props
@@ -41,9 +51,10 @@ class TableList extends Component {
                     <tbody>
                         <tr>
                             <th scope="row"></th>
-                            <td><input type="text" name="" id="" className="form-control" onChange={ this.onFilterInput }/></td>
+                            <td><input type="text" name="filterName" value={ this.state.filterName }  className="form-control" onChange={ this.onHandleChange }/></td>
                             <td>
-                                <select name="filter"  className="form-control" onChange={ this.onFilter }>
+                                <select name="filterStatus" value={ this.state.filterStatus }  className="form-control" onChange={ this.onHandleChange }>
+                                    <option value="all">Tất cả</option>
                                     <option value="1">Kích hoạt</option>
                                     <option value="2">Ẩn</option>
                                 </select>
