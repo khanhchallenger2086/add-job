@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import TableItem from "./TableItem";
+import { connect } from "react-redux";
 
 
 class TableList extends Component {
@@ -29,8 +30,8 @@ class TableList extends Component {
     }
 
     render() {
-        var { data } = this.props
-        var elementsItem = data.map((item, index) => {
+        var { tasks } = this.props
+        var elementsItem = tasks.map((item, index) => {
             return <TableItem key={index}
                 item={item}
                 index={index} 
@@ -70,4 +71,11 @@ class TableList extends Component {
     }
 }
 
-export default TableList;
+const mapStateToProps = (state) => {
+    return {
+        tasks : state.task
+    }
+}
+
+
+export default connect(mapStateToProps,null)(TableList);

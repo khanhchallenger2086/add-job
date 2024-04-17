@@ -8,10 +8,8 @@ class App extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			data: [],
+			// data: [],
 			toggleForm: true,
-			// filter: '',
-			// filterOfName: '',
 			filterName : '',
 			filterStatus : '1',
 		}
@@ -40,14 +38,14 @@ class App extends Component {
 		localStorage.setItem( "data",  JSON.stringify(data))
 	}
 
-	componentWillMount = () => {
-		var data =  JSON.parse(localStorage.getItem("data"));
+	// componentWillMount = () => {
+	// 	var data =  JSON.parse(localStorage.getItem("data"));
 		
-		this.setState({
-			 data  : data
-		})
+	// 	this.setState({
+	// 		 data  : data
+	// 	})
 
-	}
+	// }
 
 	onToggleForm = () => {
 		this.setState({
@@ -108,17 +106,17 @@ class App extends Component {
 	render() {
 		var { data , toggleForm, filterName , filterStatus } = this.state;
 
-		if ( filterStatus === true ) {
-			data = data.filter(dataItem =>  dataItem.status === true)
-		} else if (filterStatus === false) {
-			data = data.filter(dataItem =>  dataItem.status === false)
-		} else if (filterStatus === 'all') {
-			data = data
-		}
+		// if ( filterStatus === true ) {
+		// 	data = data.filter(dataItem =>  dataItem.status === true)
+		// } else if (filterStatus === false) {
+		// 	data = data.filter(dataItem =>  dataItem.status === false)
+		// } else if (filterStatus === 'all') {
+		// 	data = data
+		// }
 
-		if (filterName !== '') {
-			data = data.filter((dataItem) =>  { return dataItem.name.indexOf(filterName) !== -1 }) 
-		} 
+		// if (filterName !== '') {
+		// 	data = data.filter((dataItem) =>  { return dataItem.name.indexOf(filterName) !== -1 }) 
+		// } 
 
 		return (
 			<div>
@@ -152,7 +150,7 @@ class App extends Component {
 								</div>
 
 								<div className="col-12">
-									<TableList data = { data } 
+									<TableList 
 									onDelete={ this.onDelete } 
 									onFilter = { this.onFilter }
 									 />

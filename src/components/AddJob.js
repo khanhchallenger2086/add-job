@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
+import * as actions from './../actions/index'
 
 
 class AddJob extends Component {
@@ -12,8 +14,9 @@ class AddJob extends Component {
 
     onSubmit = (event) => {
         event.preventDefault();
-        this.props.addJob(this.state.name,this.state.status);
-        this.onHandleClear();
+        this.props.onAddTask(this.state);
+        // this.props.addJob(this.state.name,this.state.status);
+        // this.onHandleClear();
     }
 
     onHandleChange = (event) => {
@@ -59,4 +62,18 @@ class AddJob extends Component {
     }
 }
 
-export default AddJob;
+const mapStateToProp = state => {
+    return {
+
+    }
+}
+
+const mapDispatchToProp = (dispatch, props) => {
+    return {
+        onAddTask : (task) => {
+            dispatch(actions.addTask(task));
+        }
+    }
+}
+
+export default connect(mapStateToProp,mapDispatchToProp)(AddJob);

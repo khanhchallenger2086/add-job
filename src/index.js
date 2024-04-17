@@ -5,10 +5,18 @@ import App from './App';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
+// Store
+import { createStore } from 'redux';
+import myReducer  from './reducers/index.js';
+import { Provider } from 'react-redux';
+
+const store = createStore(myReducer);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-    <App />
+    <Provider store={ store }>
+        <App />
+    </Provider>
 );
 
 
